@@ -1,6 +1,6 @@
 # Pastry - Turn maps into query Strings.
 
-## Pastry is a 'Quiche' for C# fork in Elixir.
+### Pastry is a 'Quiche' for C# fork in Elixir.
 
 ### Usage
 ```elixir
