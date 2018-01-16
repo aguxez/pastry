@@ -7,7 +7,8 @@ defmodule Pastry.State.Query do
     do: Agent.start_link(fn -> [] end, name: __MODULE__)
 
   def save(value) do
-    Agent.update(__MODULE__, &List.insert_at(&1, -1, value))
+    state = URI.encode(value)
+    Agent.update(__MODULE__, &List.insert_at(&1, -1, state))
 
     Enum.join(get(), "&")
   end

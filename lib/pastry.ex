@@ -23,20 +23,21 @@ defmodule Pastry do
   defp get_encoded_string(params) do
     Enum.each(params, fn({key, val}) ->
       if is_list(val) do
-        Enum.each(val, fn x ->
-          state = "#{key}=#{x}"
-          Param.save(state)
-        end)
+        save_element(val, key, &Param.save/1)
       else
-        Enum.each([val], fn x ->
-          state = URI.encode("#{key}=#{x}")
-          Query.save(state)
-        end)
+        save_element([val], key, &Query.save/1)
       end
     end)
 
     [Param.get(), Query.get()]
     |> List.flatten()
     |> Enum.join("&")
+  end
+
+  defp save_element(val, key, fun) do
+    Enum.each(val, fn x ->
+      state = "#{key}=#{x}"
+      fun.(state)
+    end)
   end
 end
