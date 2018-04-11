@@ -7,17 +7,30 @@ defmodule Pastry do
 
   alias Pastry.State.{Param, Query}
 
-  @doc """
-  Converts a given 'map' to a query string.
+  @typedoc """
+  Map or Keyword list
   """
-  @spec to_query_string(map, Keyword.t()) :: String.t()
-  def to_query_string(values, opts \\ []) when is_map(values) do
+  @type map_or_kw :: map | Keyword.t()
+
+  @doc """
+  Converts a given 'map' or 'keyword' to a query string.
+  """
+  @spec to_query_string(map_or_kw, Keyword.t()) :: String.t()
+  def to_query_string(values, opts \\ [])
+
+  def to_query_string(values, opts) when is_map(values) do
     query = get_encoded_string(values, opts)
 
     Param.clean()
     Query.clean()
 
     "?" <> query
+  end
+
+  def to_query_string(values, opts) do
+    values
+    |> Enum.into(%{})
+    |> to_query_string(opts)
   end
 
   defp get_encoded_string(params, opts) do
@@ -50,7 +63,7 @@ defmodule Pastry do
     case opt do
       "camel" -> camelize(str_key)
       "pascal" -> pascalize(str_key)
-      "ignore" -> key
+      _ -> key
     end
   end
 
