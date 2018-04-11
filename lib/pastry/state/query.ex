@@ -3,8 +3,7 @@ defmodule Pastry.State.Query do
 
   use Agent
 
-  def start_link(_),
-    do: Agent.start_link(fn -> [] end, name: __MODULE__)
+  def start_link(_), do: Agent.start_link(fn -> [] end, name: __MODULE__)
 
   def save(value) do
     state = URI.encode(value)
@@ -13,9 +12,7 @@ defmodule Pastry.State.Query do
     Enum.join(get(), "&")
   end
 
-  def get,
-    do: Agent.get(__MODULE__, &(&1))
+  def get, do: Agent.get(__MODULE__, & &1)
 
-  def clean,
-    do: Agent.update(__MODULE__, fn _ -> [] end)
+  def clean, do: Agent.update(__MODULE__, fn _ -> [] end)
 end

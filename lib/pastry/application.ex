@@ -12,7 +12,7 @@ defmodule Pastry.Application do
     children = [
       # Starts a worker by calling: Pastry.Worker.start_link(arg)
       {Param, []},
-      {Query, []},
+      {Query, []}
     ]
 
     # See https://hexdocs.pm/elixir/Supervisor.html
