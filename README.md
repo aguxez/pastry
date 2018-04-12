@@ -2,6 +2,11 @@
 
 ## Pastry is a [Quiche](http://github.com/chrismissal/quiche) fork in Elixir. [![Build Status](https://travis-ci.org/aguxez/pastry.svg?branch=master)](https://travis-ci.org/aguxez/pastry)
 
+### Install
+```elixir
+{:pastry, "~> 0.2.0"}
+```
+
 ### Usage
 ```elixir
 iex> Pastry.to_query_string(%{param: ~w(this is a parameters list), words: "Elixir is fun!"})
