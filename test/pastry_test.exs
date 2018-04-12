@@ -37,4 +37,11 @@ defmodule PastryTest do
     assert Pastry.to_query_string(params_camel, case: "camel") === expected_camel
     assert Pastry.to_query_string(params_pascal, case: "pascal") === expected_pascal
   end
+
+  test "applies function on keys" do
+    expected = "?PARAM=this&PARAM=is&PARAM=a&PARAM=list"
+    params = %{param: ~w(this is a list)}
+
+    assert Pastry.to_query_string(params, func: &String.upcase/1) === expected
+  end
 end

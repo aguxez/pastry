@@ -7,6 +7,8 @@ defmodule Pastry do
 
   alias Pastry.State.{Param, Query}
 
+  require IEx
+
   @typedoc """
   Map or Keyword list
   """
@@ -14,6 +16,11 @@ defmodule Pastry do
 
   @doc """
   Converts a given 'map' or 'keyword' to a query string.
+
+  'opts' can be:
+
+  * `:case`: "camel" or "pascal"
+  * `:func`: An arity 1 function to be applied on keys
   """
   @spec to_query_string(map_or_kw, Keyword.t()) :: String.t()
   def to_query_string(values, opts \\ [])
@@ -34,10 +41,11 @@ defmodule Pastry do
   end
 
   defp get_encoded_string(params, opts) do
-    opt_case = Keyword.get(opts, :case, "ignore")
+    opt_case = opts[:case]
+    func = opts[:func]
 
     Enum.each(params, fn {key, val} ->
-      do_get_encoded_string(val, key, opt_case)
+      do_get_encoded_string(val, key, {opt_case, func})
     end)
 
     [Param.get(), Query.get()]
@@ -45,19 +53,25 @@ defmodule Pastry do
     |> Enum.join("&")
   end
 
-  defp do_get_encoded_string(val, key, opt) when is_list(val) do
-    new_key = check_key_opt(key, opt)
+  defp do_get_encoded_string(val, key, {opt_case, func}) when is_function(func) do
+    new_key = apply(func, ["#{key}"])
+
+    do_get_encoded_string(val, new_key, {opt_case, nil})
+  end
+
+  defp do_get_encoded_string(val, key, {opt_case, _func}) when is_list(val) do
+    new_key = check_case_opt(key, opt_case)
 
     save_element(val, new_key, &Param.save/1)
   end
 
-  defp do_get_encoded_string(val, key, opt) do
-    new_key = check_key_opt(key, opt)
+  defp do_get_encoded_string(val, key, {opt_case, _func}) do
+    new_key = check_case_opt(key, opt_case)
 
     save_element([val], new_key, &Query.save/1)
   end
 
-  defp check_key_opt(key, opt) do
+  defp check_case_opt(key, opt) do
     str_key = to_string(key)
 
     case opt do
