@@ -44,4 +44,9 @@ defmodule PastryTest do
 
     assert Pastry.to_query_string(params, func: &String.upcase/1) === expected
   end
+
+  test "returns empty string if not value is passed" do
+    assert Pastry.to_query_string(%{}) == ""
+    assert Pastry.to_query_string([]) == ""
+  end
 end

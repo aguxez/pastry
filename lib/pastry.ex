@@ -31,7 +31,10 @@ defmodule Pastry do
     Param.clean()
     Query.clean()
 
-    "?" <> query
+    cond do
+      values == [] || values == %{} -> ""
+      true -> "?" <> query
+    end
   end
 
   def to_query_string(values, opts) do
