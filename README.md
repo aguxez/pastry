@@ -4,7 +4,7 @@
 
 ### Install
 ```elixir
-{:pastry, "~> 0.2.0"}
+{:pastry, "~> 0.3.0"}
 ```
 
 ### Usage
@@ -25,4 +25,12 @@ iex> Pastry.to_query_string([some_words: ~w(some list), text_word: "Pascal"], ca
 ...
 iex> Pastry.to_query_string(%{some_words: "A word"}, case: "camel")
 "?someWords=A%20word"
+```
+
+### And if passing case options is not enough
+You can just pass an arity 1 function with the `:function` option
+
+```elixir
+iex> Pastry.to_query_string([text_message: "some word"], func: &String.upcase/1)
+"?TEXT_MESSAGE=some%20word"
 ```
