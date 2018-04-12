@@ -1,6 +1,6 @@
 # Pastry - Turn maps and keyword lists into query Strings.
 
-## Pastry is a [Quiche](http://github.com/chrismissal/quiche) fork in Elixir.
+## Pastry is a [Quiche](http://github.com/chrismissal/quiche) fork in Elixir. [![Build Status](https://travis-ci.org/aguxez/pastry.svg?branch=master)](https://travis-ci.org/aguxez/pastry)
 
 ### Usage
 ```elixir
