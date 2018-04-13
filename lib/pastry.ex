@@ -84,10 +84,7 @@ defmodule Pastry do
 
   defp camelize(key) do
     [first | rest] = String.split(key, "_")
-    camelized =
-      rest
-      |> Enum.map(&String.capitalize(&1))
-      |> Enum.join("")
+    camelized = Enum.map_join(rest, "", &String.capitalize(&1))
 
     [first] ++ [camelized]
   end
@@ -95,8 +92,7 @@ defmodule Pastry do
   defp pascalize(key) do
     key
     |> String.split("_")
-    |> Enum.map(&String.capitalize(&1))
-    |> Enum.join("")
+    |> Enum.map_join("", &String.capitalize(&1))
   end
 
   defp save_element(val, key, fun) do
