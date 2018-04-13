@@ -2,12 +2,10 @@ defmodule Pastry do
   @moduledoc """
   Pastry is a Elixir -fork- of 'Quiche'.
 
-  Turn an Array into a query string.
+  Turn a map or keyword list into a query string.
   """
 
   alias Pastry.State.{Param, Query}
-
-  require IEx
 
   @typedoc """
   Map or Keyword list
