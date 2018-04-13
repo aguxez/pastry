@@ -28,7 +28,7 @@ iex> Pastry.to_query_string(%{some_words: "A word"}, case: "camel")
 ```
 
 ### And if passing case options is not enough
-You can just pass an arity 1 function with the `:function` option
+You can just pass an arity 1 function with the `:func` option
 
 ```elixir
 iex> Pastry.to_query_string([text_message: "some word"], func: &String.upcase/1)
